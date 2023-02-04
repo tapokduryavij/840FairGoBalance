@@ -1,0 +1,31 @@
+name: Build
+on: push
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+  UNITY_EMAIL:  ${{ secrets.UNITY_EMAIL }}
+  UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+  
+  APP_NAME: template name
+  
+jobs:
+  buildAndroidAPK:
+    name: Compile APK
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2.4.2
+    - uses: actions/cache@v2
+      with:
+        path: Library
+        key: Library-${{ matrix.targetPlatform }}
+        restore-keys: Library-
+    - uses: game-ci/unity-builder@v2.1.2
+      with:
+        buildName: ${{ env.APP_NAME }}
+        targetPlatform: Android
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ${{ env.APP_NAME }}
+        path: build/Android
