@@ -41,4 +41,4 @@ jobs:
         secret_key: ${{ secrets.SECRET_KEY }}
         space_name: ${{ secrets.SPACE_NAME }}
         space_region: ${{ secrets.SPACE_REGION }}
-        source: ${{ github.workspace }}/build/Android/${{ env.APP_NAME }}.apk
+        source: build/Android/${{ env.APP_NAME }}.apk
