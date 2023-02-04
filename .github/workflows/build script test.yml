@@ -34,16 +34,11 @@ jobs:
         name: ${{ env.APP_NAME }}
         path: build/Android
         
-upload:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@master
-      - uses: BetaHuhn/do-spaces-action@v2
-        with:
-          out_dir: "./apk"
-          access_key: "DO00HC4QQ7CERVVGHCJF"
-          secret_key: "dop_v1_79d3ec91b5cc466c211ba971e25873c87b68dd5742c0e0aeaf47470e4bae60cc"
-          space_name: "myeasyapp"
-          space_region: "ams3"
-          source: '${{ github.workspace }}/build/Android/${{ env.APP_NAME }}.apk'
+    - uses: BetaHuhn/do-spaces-action@v2
+      with:
+        out_dir: "./apk"
+        access_key: "DO00HC4QQ7CERVVGHCJF"
+        secret_key: "dop_v1_79d3ec91b5cc466c211ba971e25873c87b68dd5742c0e0aeaf47470e4bae60cc"
+        space_name: "myeasyapp"
+        space_region: "ams3"
+        source: '${{ github.workspace }}/build/Android/${{ env.APP_NAME }}.apk'
