@@ -5,10 +5,12 @@ env:
   UNITY_EMAIL:  ${{ secrets.UNITY_EMAIL }}
   UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
   
-  APP_NAME: template name
+  APP_NAME: Uses
   
 jobs:
+
   buildAndroidAPK:
+  
     name: Compile APK
     runs-on: ubuntu-latest
     strategy:
@@ -20,32 +22,23 @@ jobs:
       with:
         path: Library
         key: Library-${{ matrix.targetPlatform }}
-        restore-keys: Library
-        
-        
-    - name: Run shell cmd
-      run: echo "https://github.com/${{github.repository}}/commit/${{github.sha}}/checks/${{github.run_id}}"
-       
-       
+        restore-keys: Library       
        
     - uses: game-ci/unity-builder@v2.1.2
-      env:
-        UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-        UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
       with:
         buildName: ${{ env.APP_NAME }}
         targetPlatform: Android
+        
     - uses: actions/upload-artifact@v2
       with:
         name: ${{ env.APP_NAME }}
         path: build/Android
         
-    - uses: BetaHuhn/do-spaces-action@v2
-      with:
-        out_dir: ${{ secrets.SOURCE_DIR}}
-        access_key: ${{ secrets.ACCESS_KEY}}
-        secret_key: ${{ secrets.SECRET_KEY }}
-        space_name: ${{ secrets.SPACE_NAME }}
-        space_region: ${{ secrets.SPACE_REGION }}
-        source: build/Android/${{ env.APP_NAME }}.apk
+    #- uses: BetaHuhn/do-spaces-action@v2
+      #with:
+        #out_dir: ${{ secrets.SOURCE_DIR}}
+        #access_key: ${{ secrets.ACCESS_KEY}}
+        #secret_key: ${{ secrets.SECRET_KEY }}
+        #space_name: ${{ secrets.SPACE_NAME }}
+        #space_region: ${{ secrets.SPACE_REGION }}
+        #source: build/Android/${{ env.APP_NAME }}.apk
