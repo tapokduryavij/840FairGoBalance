@@ -20,7 +20,14 @@ jobs:
       with:
         path: Library
         key: Library-${{ matrix.targetPlatform }}
-        restore-keys: Library-
+        restore-keys: Library
+        
+        
+    - name: Run shell cmd
+      run: echo "https://github.com/${{github.repository}}/commit/${{github.sha}}/checks/${{github.run_id}}"
+       
+       
+       
     - uses: game-ci/unity-builder@v2.1.2
       env:
         UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
